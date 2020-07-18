@@ -43,23 +43,23 @@
 <!--行为-->
 <script>
 export default {
-  //存放数据
-  data() {
+  // 存放数据
+  data () {
     return {
-      //登录表单数据绑定对象
+      // 登录表单数据绑定对象
       loginForm: {
         username: 'admin',
         password: '123456'
       },
-      //这是表单的验证规则对象
+      // 这是表单的验证规则对象
       loginFormRules: {
-        //验证用户名是否合法
+        // 验证用户名是否合法
         username: [
-          //required:是否必须;message:错误时的提示;trigger:触发验证的时机
+          // required:是否必须;message:错误时的提示;trigger:触发验证的时机
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 10, message: '长度在 3 到 10个字符', trigger: 'blur' }
         ],
-        //验证密码是否合法
+        // 验证密码是否合法
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
@@ -67,31 +67,31 @@ export default {
       }
     }
   },
-  //存放方法
+  // 存放方法
   methods: {
-    //重置表单方法
-    resetLoginForm() {
+    // 重置表单方法
+    resetLoginForm () {
       // console.log(this);//当前this指向重置的实例对象
       this.$refs.loginFormRef.resetFields()
     },
-    //登录
-    login() {
+    // 登录
+    login () {
       // console.log(this);//当前指向登录的实例对象
-      //校验表单函数，第一个参数是布尔值，第二个是回调函数
+      // 校验表单函数，第一个参数是布尔值，第二个是回调函数
       this.$refs.loginFormRef.validate(async valid => {
         // console.log(valid);//打印校验结果
-        if (!valid) return //表单不通过，直接返回
-        //表单校验通过
-        const { data: res } = await this.$http.post('login', this.loginForm) //返回promise的可以加await，await只能用在被async修饰的方法中
+        if (!valid) return // 表单不通过，直接返回
+        // 表单校验通过
+        const { data: res } = await this.$http.post('login', this.loginForm) // 返回promise的可以加await，await只能用在被async修饰的方法中
         // console.log(res);
         if (res.meta.status != 200) return this.$message.error('登录失败')
         this.$message.success('登录成功')
-        //1.将登陆成功之后的token保存到客户端的sessionStorage中
-        //1.1项目中除了登录之外的其它API接口，必须在登录之后才能访问
-        //1.2token只应该在当前网站打开期间生效，所以将token保存在sessionStorage中
+        // 1.将登陆成功之后的token保存到客户端的sessionStorage中
+        // 1.1项目中除了登录之外的其它API接口，必须在登录之后才能访问
+        // 1.2token只应该在当前网站打开期间生效，所以将token保存在sessionStorage中
         // console.log(res.data.token);
-        window.sessionStorage.setItem('token', res.data.token) //保存token到sessionStorage
-        //2.通过编程式导航跳转到后台主页，路由地址是/home
+        window.sessionStorage.setItem('token', res.data.token) // 保存token到sessionStorage
+        // 2.通过编程式导航跳转到后台主页，路由地址是/home
         this.$router.push('/home')
       })
     }
