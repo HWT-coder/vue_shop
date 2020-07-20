@@ -11,7 +11,7 @@
       <!-- 添加角色区域 -->
       <el-row>
         <el-col :span="4">
-          <el-button type="primary">添加角色</el-button>
+          <el-button type="primary" @click="showAddRoleDialog">添加角色</el-button>
         </el-col>
       </el-row>
       <!-- 角色列表区域 -->
@@ -149,6 +149,22 @@
         <el-button type="primary" @click="editRole">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 添加角色对话框 -->
+    <el-dialog title="添加角色" :visible.sync="addRoleDialogVisible" width="50%" @close="addRoleClosed">
+      <!-- 内容主体区域 -->
+      <el-form :model="addRoleForm" :rules="editRoleRules" ref="addRoleRef" label-width="80px">
+        <el-form-item prop="roleName" label="角色名称">
+          <el-input v-model="addRoleForm.roleName"></el-input>
+        </el-form-item>
+        <el-form-item prop="roleDesc" label="角色描述">
+          <el-input v-model="addRoleForm.roleDesc"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addRole">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -188,6 +204,13 @@ export default {
           { required: true, message: '请输入角色描述', trigger: 'blur' },
           { min: 5, max: 15, message: '长度在 5 到 15个字符', trigger: 'blur' }
         ]
+      },
+      // 控制是否显示添加角色对话框
+      addRoleDialogVisible:false,
+      // 添加角色表单
+      addRoleForm:{
+        roleName:'',
+        roleDesc:''
       }
     }
   },
@@ -376,6 +399,36 @@ export default {
       this.$message.success('删除角色成功')
       // 更新角色列表
       this.getRolesList()
+    },
+    // 点击展示添加角色对话框
+    showAddRoleDialog(){
+      this.addRoleDialogVisible=true
+    },
+    // 点击添加角色
+    addRole(){
+      // 校验表单
+      this.$refs.addRoleRef.validate(async valid =>{
+        // 校验表单不通过直接return
+        if(!valid) return
+        // 校验通过发起网络请求
+        const{data:res}=await this.$http.post('roles',{roleName:this.addRoleForm.roleName,roleDesc:this.addRoleForm.roleDesc})
+        // 创建角色失败
+        if(res.meta.status!==201){
+          this.$message.error('创建角色失败')
+        }
+        // 创建角色成功
+        this.$message.success('创建角色成功')
+        // console.log(res)
+        // 刷新角色列表
+        this.getRolesList()
+        // 隐藏添加角色对话框
+        this.addRoleDialogVisible=false
+      })
+    },
+    // 点击关闭添加角色对话框事件
+    addRoleClosed(){
+      // 清空表单
+      this.$refs.addRoleRef.resetFields()
     }
   }
 }
