@@ -23,3 +23,25 @@ html,body,#app{
 .el-pagination{
     margin-top: 15px;
 }
+/* 级联选择器菜单样式 */
+/* 这一步很重要，不然级联选择器会出bug显示不出来 */
+.el-cascader-menu{
+    height: 200px;
+    list-style-type: none;
+}
+/*第一种css方法：使用css将小圆圈变透明然后覆盖在整个文字上方，点击文字的时候其实是在点击小圈圈。*/
+/*以下样式将单选框隐藏，并绝对定位与文字内容一样大小，这样点击时可以点击整行文字*/
+.el-cascader-panel .el-radio{
+    position:absolute;
+    z-index:10;
+    padding:0 10px;
+    width:132px;
+    height:34px;
+    line-height:34px;
+   }
+   .el-cascader-panel .el-radio__input{
+    visibility:hidden;
+   }
+   .el-cascader-panel .el-input-node__postfix{
+    top:10px;
+   }

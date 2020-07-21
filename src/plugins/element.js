@@ -1,9 +1,11 @@
 import Vue from 'vue'
 // 按需引入
-import { Button, Form, FormItem, Input, Message, Header, Container, 
-    Aside, Main, Menu, Submenu, MenuItem ,Breadcrumb,BreadcrumbItem
-    ,Card,Row,Col,Table,TableColumn,Switch,Tooltip,Pagination,Dialog,
-    MessageBox,Tag,Tree,Select,Option} from 'element-ui'
+import {
+  Button, Form, FormItem, Input, Message, Header, Container,
+  Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem
+  , Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog,
+  MessageBox, Tag, Tree, Select, Option, Cascader,Radio
+} from 'element-ui'
 import { options } from 'less'
 // 全局注册为可用
 Vue.use(Button)
@@ -32,7 +34,9 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
+Vue.use(Radio)
 // message组件需要全局挂载到vue上,可以通过this.$message调用
 Vue.prototype.$message = Message
 // 全局挂载confirm
-Vue.prototype.$confirm=MessageBox.confirm
+Vue.prototype.$confirm = MessageBox.confirm

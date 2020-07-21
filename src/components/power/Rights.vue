@@ -26,31 +26,31 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-            // 权限列表
-            rightsList:[]
-        }
-    },
-    // 在页面创建完成的生命周期函数中获取权限列表
-    created(){
-        // 获取权限列表
-        this.getRightsList()
-    },
-    methods:{
-        // 获取权限列表
-        async getRightsList(){
-            // 发起网络请求获取权限列表
-            const {data:res}= await this.$http.get('rights/list')//返回列表格式的数据
-            // 获取权限列表失败
-            if (res.meta.status !==200){
-                return this.$message.error('获取权限列表失败');
-            }
-            // 获取权限列表成功
-            // console.log(res)
-            this.rightsList=res.data
-        }
+  data () {
+    return {
+      // 权限列表
+      rightsList: []
     }
+  },
+  // 在页面创建完成的生命周期函数中获取权限列表
+  created () {
+    // 获取权限列表
+    this.getRightsList()
+  },
+  methods: {
+    // 获取权限列表
+    async getRightsList () {
+      // 发起网络请求获取权限列表
+      const { data: res } = await this.$http.get('rights/list')// 返回列表格式的数据
+      // 获取权限列表失败
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取权限列表失败')
+      }
+      // 获取权限列表成功
+      // console.log(res)
+      this.rightsList = res.data
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

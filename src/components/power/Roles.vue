@@ -169,7 +169,7 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       // 角色列表数据
       roleList: [],
@@ -194,7 +194,7 @@ export default {
       editRoleForm: [],
       // 编辑角色信息的表单校验规则
       editRoleRules: {
-        //角色名称校验规则
+        // 角色名称校验规则
         roleName: [
           { required: true, message: '请输入角色名称', trigger: 'blur' },
           { min: 2, max: 10, message: '长度在 2 到 10个字符', trigger: 'blur' }
@@ -206,22 +206,22 @@ export default {
         ]
       },
       // 控制是否显示添加角色对话框
-      addRoleDialogVisible:false,
+      addRoleDialogVisible: false,
       // 添加角色表单
-      addRoleForm:{
-        roleName:'',
-        roleDesc:''
+      addRoleForm: {
+        roleName: '',
+        roleDesc: ''
       }
     }
   },
   // 在页面创建完成的生命周期函数中获取角色列表
-  created() {
+  created () {
     // 获取角色列表
     this.getRolesList()
   },
   methods: {
     // 获取角色列表
-    async getRolesList() {
+    async getRolesList () {
       // 发起网络请求获取角色列表
       const { data: res } = await this.$http.get('roles')
       // 获取角色列表失败
@@ -233,7 +233,7 @@ export default {
       this.roleList = res.data
     },
     // 根据id删除对应的权限
-    async removeRightsById(role, rightId) {
+    async removeRightsById (role, rightId) {
       // 弹框提示用户是否要删除
       const confirmResult = await this.$confirm(
         '此操作将永久删除该权限, 是否继续?',
@@ -266,7 +266,7 @@ export default {
       this.$message.success('删除权限成功')
     },
     // 展示分配用户权限的对话框
-    async showSetRightDialog(role) {
+    async showSetRightDialog (role) {
       // 将角色的id保存在data中
       this.roleId = role.id
       // 获取所有权限数据
@@ -275,7 +275,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('获取权限数据失败')
       }
-      //把获取到权限数据保存到data中
+      // 把获取到权限数据保存到data中
       this.rightsList = res.data
       // 获取权限列表成功
       //   console.log(this.rightsList)
@@ -285,7 +285,7 @@ export default {
       this.SetRightdialogVisible = true
     },
     // 通过递归的形式，获取角色下所有三级权限的id,并保存到defKeys中
-    getLeafKeys(node, arr) {
+    getLeafKeys (node, arr) {
       // 判断是否为三级节点，只需要看有无children属性
       if (!node.children) {
         return arr.push(node.id)
@@ -294,12 +294,12 @@ export default {
       node.children.forEach(item => this.getLeafKeys(item, arr))
     },
     // 设置权限对话框关闭事件
-    SetRightDialogClosed() {
+    SetRightDialogClosed () {
       // 清空当前的defKeys,不清空会出bug，之前角色的三级id会一直待在defkeys，导致其它角色的权限增加
       this.defKeys = []
     },
     // 点击为角色分配权限
-    async allotRights() {
+    async allotRights () {
       // 拿到所有半选或全选状态下的id放进数组
       const keys = [
         // ...是展开运算符
@@ -325,7 +325,7 @@ export default {
       this.SetRightdialogVisible = false
     },
     // 点击展示修改角色信息对话框
-    async showEditRoleDialog(id) {
+    async showEditRoleDialog (id) {
       // 根据id查询信息
       const { data: res } = await this.$http.get('roles/' + id)
       // 查询角色信息失败
@@ -339,11 +339,11 @@ export default {
       this.editRoleDialogVisible = true
     },
     // 关闭编辑角色信息对话框清空表单
-    editRoleClosed() {
+    editRoleClosed () {
       this.$refs.editRoleFormRef.resetFields()
     },
     // 点击确定修改角色信息
-    editRole() {
+    editRole () {
       // 表单预校验
       this.$refs.editRoleFormRef.validate(async valid => {
         // console.log(valid)
@@ -370,7 +370,7 @@ export default {
       })
     },
     // 点击删除角色
-    async removeRoleById(id) {
+    async removeRoleById (id) {
       // console.log(id)
       // 弹框询问用户是否删除数据
       const confirmResult = await this.$confirm(
@@ -401,19 +401,19 @@ export default {
       this.getRolesList()
     },
     // 点击展示添加角色对话框
-    showAddRoleDialog(){
-      this.addRoleDialogVisible=true
+    showAddRoleDialog () {
+      this.addRoleDialogVisible = true
     },
     // 点击添加角色
-    addRole(){
+    addRole () {
       // 校验表单
-      this.$refs.addRoleRef.validate(async valid =>{
+      this.$refs.addRoleRef.validate(async valid => {
         // 校验表单不通过直接return
-        if(!valid) return
+        if (!valid) return
         // 校验通过发起网络请求
-        const{data:res}=await this.$http.post('roles',{roleName:this.addRoleForm.roleName,roleDesc:this.addRoleForm.roleDesc})
+        const { data: res } = await this.$http.post('roles', { roleName: this.addRoleForm.roleName, roleDesc: this.addRoleForm.roleDesc })
         // 创建角色失败
-        if(res.meta.status!==201){
+        if (res.meta.status !== 201) {
           this.$message.error('创建角色失败')
         }
         // 创建角色成功
@@ -422,11 +422,11 @@ export default {
         // 刷新角色列表
         this.getRolesList()
         // 隐藏添加角色对话框
-        this.addRoleDialogVisible=false
+        this.addRoleDialogVisible = false
       })
     },
     // 点击关闭添加角色对话框事件
-    addRoleClosed(){
+    addRoleClosed () {
       // 清空表单
       this.$refs.addRoleRef.resetFields()
     }

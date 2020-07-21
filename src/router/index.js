@@ -5,7 +5,8 @@ import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import Users from '../components/user/Users.vue'
 import Rights from '../components/power/Rights.vue'
-import Roles from "../components/power/Roles.vue";
+import Roles from '../components/power/Roles.vue'
+import Cate from '../components/goods/Cate.vue'
 
 Vue.use(VueRouter)
 
@@ -25,21 +26,30 @@ const routes = [
     redirect: '/welcome',
     // 子路由
     children: [
+      // 欢迎页
       {
         path: '/welcome',
         component: Welcome
       },
+      // 用户列表页
       {
         path: '/users',
         component: Users
       },
+      // 权限列表页
       {
         path: '/rights',
         component: Rights
       },
+      // 角色列表页
       {
         path: '/roles',
         component: Roles
+      },
+      // 商品分类页
+      {
+        path: '/categories',
+        component: Cate
       }
     ]
   }
