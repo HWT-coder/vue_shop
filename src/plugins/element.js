@@ -4,7 +4,7 @@ import {
   Button, Form, FormItem, Input, Message, Header, Container,
   Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem
   , Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog,
-  MessageBox, Tag, Tree, Select, Option, Cascader,Radio
+  MessageBox, Tag, Tree, Select, Option, Cascader,Radio,Alert,Tabs,TabPane
 } from 'element-ui'
 import { options } from 'less'
 // 全局注册为可用
@@ -36,6 +36,9 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
 Vue.use(Radio)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 // message组件需要全局挂载到vue上,可以通过this.$message调用
 Vue.prototype.$message = Message
 // 全局挂载confirm
