@@ -119,7 +119,12 @@
       </span>
     </el-dialog>
     <!-- 分配角色对话框 -->
-    <el-dialog title="分配角色" :visible.sync="setRoleDialogVisible" width="50%" @close="setRoleDialogClosed">
+    <el-dialog
+      title="分配角色"
+      :visible.sync="setRoleDialogVisible"
+      width="50%"
+      @close="setRoleDialogClosed"
+    >
       <div>
         <p>当前用户：{{userInfo.username}}</p>
         <p>当前角色：{{userInfo.role_name}}</p>
@@ -144,7 +149,7 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     // 自定义手机号校验规则
     var checkMobile = (rule, value, cb) => {
       //   验证手机号的正则表达式
@@ -174,7 +179,7 @@ export default {
         // 当前页码
         pagenum: 1,
         // 当前每页显示多少条数据
-        pagesize: 2
+        pagesize: 2,
       },
       // 用户列表
       userList: [],
@@ -193,30 +198,30 @@ export default {
         //   邮箱
         email: '',
         //   手机
-        mobile: ''
+        mobile: '',
       },
       // 添加用户的表单校验规则对象
       addFormRules: {
         //   用户名校验规则
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10个字符', trigger: 'blur' }
+          { min: 3, max: 10, message: '长度在 3 到 10个字符', trigger: 'blur' },
         ],
         //   密码校验规则
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
+          { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' },
         ],
         // 邮箱校验规则
         email: [
           { required: true, message: '请输入邮箱', trigger: 'blur' },
-          { validator: checkEmail, trigger: 'blur' }
+          { validator: checkEmail, trigger: 'blur' },
         ],
         // 手机校验规则
         mobile: [
           { required: true, message: '请输入手机', trigger: 'blur' },
-          { validator: checkMobile, trigger: 'blur' }
-        ]
+          { validator: checkMobile, trigger: 'blur' },
+        ],
       },
       // 修改用户信息表单
       editForm: {},
@@ -225,13 +230,13 @@ export default {
         // 邮箱校验规则
         email: [
           { required: true, message: '请输入邮箱', trigger: 'blur' },
-          { validator: checkEmail, trigger: 'blur' }
+          { validator: checkEmail, trigger: 'blur' },
         ],
         // 手机校验规则
         mobile: [
           { required: true, message: '请输入手机', trigger: 'blur' },
-          { validator: checkMobile, trigger: 'blur' }
-        ]
+          { validator: checkMobile, trigger: 'blur' },
+        ],
       },
       // 控制是否显示分配角色对话框
       setRoleDialogVisible: false,
@@ -240,41 +245,43 @@ export default {
       // 角色列表数据
       rolesList: [],
       // 已选中的角色Id值
-      selectedRoleId: ''
+      selectedRoleId: '',
     }
   },
-  created () {
+  created() {
     // 获取用户列表
     this.getUserList()
   },
   methods: {
     // 获取用户列表
-    async getUserList () {
+    async getUserList() {
       const { data: res } = await this.$http.get('users', {
-        params: this.queryInfo
+        params: this.queryInfo,
       })
       // 获取用户列表失败
-      if (res.meta.status !== 200) { return this.$message.error('获取用户列表失败') }
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取用户列表失败')
+      }
       this.userList = res.data.users
       this.total = res.data.total
       // console.log(res)
     },
     // 监听pagesize改变的事件
-    handleSizeChange (newSize) {
+    handleSizeChange(newSize) {
       // console.log(newSize)
       this.queryInfo.pagesize = newSize
       // 重新发起请求
       this.getUserList()
     },
     // 监听页码值改变的事件
-    handleCurrentChange (newPage) {
+    handleCurrentChange(newPage) {
       // console.log(newPage)
       this.queryInfo.pagenum = newPage
       // 重新发起请求
       this.getUserList()
     },
     // 监听 switch 开关状态的改变
-    async userStateChanged (userinfo) {
+    async userStateChanged(userinfo) {
       // console.log(userinfo)
       // 发送请求修改状态
       const { data: res } = await this.$http.put(
@@ -290,13 +297,13 @@ export default {
       this.$message.success('更新用户状态成功')
     },
     // 对话框关闭后清空表单
-    addDialogClosed () {
+    addDialogClosed() {
       this.$refs.addFormRef.resetFields()
     },
     // 点击按钮添加新用户
-    addUser () {
+    addUser() {
       // 表单预校验
-      this.$refs.addFormRef.validate(async valid => {
+      this.$refs.addFormRef.validate(async (valid) => {
         // console.log(valid)
         // 校验结果不通过直接return
         if (!valid) return
@@ -317,7 +324,7 @@ export default {
       })
     },
     // 点击弹出修改用户信息的对话框
-    async showEditDialog (id) {
+    async showEditDialog(id) {
       // console.log(id)
       // 发起网络请求根据id查询用户信息
       const { data: res } = await this.$http.get(`users/${id}`)
@@ -331,13 +338,13 @@ export default {
       this.editDialogVisible = true
     },
     // 修改用户信息对话框关闭的事件
-    editDialogClosed () {
+    editDialogClosed() {
       this.$refs.editFormRef.resetFields()
     },
     // 点击按钮修改用户信息
-    editUserInfo () {
+    editUserInfo() {
       // 表单预校验
-      this.$refs.editFormRef.validate(async valid => {
+      this.$refs.editFormRef.validate(async (valid) => {
         // console.log(valid)
         // 校验结果不通过直接return
         if (!valid) return
@@ -361,7 +368,7 @@ export default {
       })
     },
     // 点击按钮根据id删除用户信息
-    async removeUserById (id) {
+    async removeUserById(id) {
       // console.log(id)
       // 弹框询问用户是否删除数据
       const confirmResult = await this.$confirm(
@@ -370,9 +377,9 @@ export default {
         {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
         }
-      ).catch(err => err)
+      ).catch((err) => err)
       // 如果用户取消了删除，则返回字符串 cancel
       // 如果用户确定删除，则返回字符串 confirm
       // console.log(confirmResult)
@@ -392,7 +399,7 @@ export default {
       this.getUserList()
     },
     // 点击展示分配用户角色对话框
-    async setRole (userInfo) {
+    async setRole(userInfo) {
       // 把用户信息保存到data中
       this.userInfo = userInfo
       // 在展示对话框之前获取所有角色列表
@@ -409,7 +416,7 @@ export default {
       this.setRoleDialogVisible = true
     },
     // 点击分配用户角色信息
-    async saveRoleInfo () {
+    async saveRoleInfo() {
       // 判断是否选择分配角色，selectedRoleId为空即未选择
       if (!this.selectedRoleId) {
         return this.$message.error('请选择要分配的角色')
@@ -418,7 +425,7 @@ export default {
       const { data: res } = await this.$http.put(
         `users/${this.userInfo.id}/role`,
         {
-          rid: this.selectedRoleId
+          rid: this.selectedRoleId,
         }
       )
       // 请求失败
@@ -433,13 +440,13 @@ export default {
       this.setRoleDialogVisible = false
     },
     // 分配角色对话框关闭事件
-    setRoleDialogClosed () {
+    setRoleDialogClosed() {
       // 选中的角色id置为空
       this.selectedRoleId = ''
       // 即将分配角色的用户信息置为空
       this.userInfo = ''
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="less" scoped>

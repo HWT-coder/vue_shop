@@ -1,47 +1,82 @@
 /*全局样式表*/
-html,body,#app{
+
+html, body, #app {
     height: 100%;
     margin: 0;
     padding: 0;
     min-width: 1366px;
 }
+
 /* 面包屑导航样式 */
-.el-breadcrumb{
+
+.el-breadcrumb {
     margin-bottom: 15PX;
     font-size: 12PX;
 }
+
 /* 卡片视图样式 */
-.el-card{
+
+.el-card {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
 }
+
 /* 表格样式 */
-.el-table{
+
+.el-table {
     margin-top: 15px;
     font-size: 12px;
 }
+
 /* 分页样式 */
-.el-pagination{
+
+.el-pagination {
     margin-top: 15px;
 }
+
 /* 级联选择器菜单样式 */
+
 /* 这一步很重要，不然级联选择器会出bug显示不出来 */
-.el-cascader-menu{
+
+.el-cascader-menu {
     height: 200px;
     list-style-type: none;
 }
+
 /*第一种css方法：使用css将小圆圈变透明然后覆盖在整个文字上方，点击文字的时候其实是在点击小圈圈。*/
+
 /*以下样式将单选框隐藏，并绝对定位与文字内容一样大小，这样点击时可以点击整行文字*/
-.el-cascader-panel .el-radio{
-    position:absolute;
-    z-index:10;
-    padding:0 10px;
-    width:132px;
-    height:34px;
-    line-height:34px;
-   }
-   .el-cascader-panel .el-radio__input{
-    visibility:hidden;
-   }
-   .el-cascader-panel .el-input-node__postfix{
-    top:10px;
-   }
+
+.el-cascader-panel .el-radio {
+    position: absolute;
+    z-index: 10;
+    padding: 0 10px;
+    width: 132px;
+    height: 34px;
+    line-height: 34px;
+}
+
+.el-cascader-panel .el-radio__input {
+    visibility: hidden;
+}
+
+.el-cascader-panel .el-input-node__postfix {
+    top: 10px;
+}
+
+/* 步骤条样式 */
+
+.el-steps {
+    margin: 10px 0;
+}
+
+/* 步骤条文字样式 */
+
+.el-step__title {
+    font-size: 13px;
+}
+
+/* 富文本编辑器样式 */
+
+.ql-editor {
+    min-height: 300px;
+}
