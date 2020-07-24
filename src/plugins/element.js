@@ -5,7 +5,7 @@ import {
   Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem
   , Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog,
   MessageBox, Tag, Tree, Select, Option, Cascader,Radio,Alert,Tabs,TabPane,
-  Steps,Step,CheckboxGroup,Checkbox,Upload
+  Steps,Step,CheckboxGroup,Checkbox,Upload,Timeline,TimelineItem
 } from 'element-ui'
 import { options } from 'less'
 // 全局注册为可用
@@ -45,6 +45,8 @@ Vue.use(Step)
 Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
 Vue.use(Upload)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 // message组件需要全局挂载到vue上,可以通过this.$message调用
 Vue.prototype.$message = Message
 // 全局挂载confirm
